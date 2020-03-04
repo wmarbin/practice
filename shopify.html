@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopify</title>  
+    
+</head>
+<body>
+    <h1>Shopify Type and Category Generator</h1>
+    <a href="index.html">Color Size Generator</a>
+    <table>
+        <thead>
+            <tr>
+                <tr>
+                    <td>
+                        <h3>Title</h3>
+                    </td>
+                    <td>
+                        <h3>Result</h3>
+                        <input type="radio" name="result" id="grams">
+                        <span>
+                            <b>Grams</b>
+                        </span>
+                        <input type="radio" name="result" id="type" checked>
+                        <span>
+                            <b>{Type}</b>
+                        </span>
+                        <input type="radio" name="result" id="gga">
+                        <span>
+                            <b>Google Produts | Gender | Age Group</b>
+                        </span>
+                    </td>
+                </tr>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <textarea wrap="off" id="input" rows="30" style="margin: 0px; width: 414px; height: 333px;"> Billabong New Order X Sundays Men's Walkshort Shorts
+Billabong Standard Issue Men's Polo Shirts
+Billabong All Day Jaquard Men's Button Up Short-Sleeve Shirt
+                    </textarea>
+                </td>
+                <td>
+                    <textarea wrap="off" id= "output" rows="30" readonly style="margin: 0px; width: 419px; height: 332px;">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" id="generate" value="Generate">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p id="demo"></p>
+    <script type = "text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript">
+
+$('#generate').click(function(){
+    var gga = document.getElementById("gga").checked; 
+    var grams = document.getElementById("grams").checked; 
+    
+    output = "";
+    gram = "";
+    gramsout = "";
+    var lines = $('#input').val().split('\n');
+    for(var i = 0;i < lines.length;i++){
+      if (gga) {
+        
+        if (lines[i].includes("Short-Sleeve Shirts")){
+          output += "Apparel & Accessories > Clothing Accessories > Shirts";
+          output = getGender(lines[i], output);
+
+          
+        } else if ( lines[i].includes("Walkshort Shorts")){
+          output += "Apparel & Accessories > Clothing Accessories > Shorts";
+          output = getGender(lines[i], output);
+
+          }else if ( lines[i].includes("Polo Shirts")){
+            output += "Apparel & Accessories > Clothing Accessories > Polo Shirts";
+          output = getGender(lines[i], output);
+          
+        } 
+      } else{
+
+        if (lines[i].includes("Short-Sleeve Shirts")){
+          output += "Shirts\n";
+          gram = "907.18\n";
+        } else if ( lines[i].includes("Walkshort Shorts")){
+          output += "Shorts\n";
+          gram = "2721.55\n";
+
+        }else if ( lines[i].includes("Polo Shirts")){
+          output += "Polo Shirt\n";
+          gram = "907.18\n";
+          
+        }
+        gramsout += gram;
+      }
+  } // END for
+
+    gramsout = gramsout.substring(0, gramsout.lastIndexOf(gram));
+    output = output.substring(0, output.lastIndexOf("\n"));
+    if (grams) {
+      $('#output').val(gramsout);
+    } else {
+      $('#output').val(output);
+    }
+    
+});
+
+$("#output").scroll(function() {
+      $("#input").scrollTop($("#output").scrollTop()); // vertical scroll sync
+});
+
+
+function getGender(content, out) {
+        if (content.includes("Men's")){
+          out += ">>Male>>Adult\n";
+
+          
+        } else if (content.includes("Women's")){
+          out += ">>Female>>Adult\n";
+
+          
+        } else if (content.includes("Youth")){
+
+          if (content.includes("Youth Boys")){
+            out += ">>Male>>Kids\n";
+
+          
+          } else if (content.includes("Youth Girls")){
+            out += ">>Female>>Kids\n";
+
+          } else {
+            out += ">>Unisex>>Kids\n";
+          }
+
+        } else if (content.includes("Adult")){
+          out += ">>Unisex>>Adult\n";
+
+          
+        } else if (content.includes("Unisex")){
+          out += ">>Unisex>>Adult\n";
+
+          
+        } else if (content.includes("Kids")){
+          out += ">>Unisex>>Kids\n";
+
+          
+        } else if (content == ""){
+          out += "\n";
+
+          //WRONG TITLES
+        } else {
+          out += "\n";
+        }
+
+    return out;
+}
+  </script>
+
+ <script>
+ 
+function myFunction() {
+    text = document.getElementById("input").innerHTML; 
+    document.getElementById("demo").innerHTML = /Pullover/.test(text);
+    output = "";
+    var lines = text.split('\n');
+    for(var i = 0;i < lines.length;i++){
+      
+        if (lines[i].includes("Short-Sleeve Shirts")){
+          output += "Shirts\n"; 
+        }  else if (lines[i].includes("Walkshort Shorts")){
+          output += "Pants\n";
+        } else if (lines[i].includes("Polo Shirts")){
+          output += "Polo Shirts\n";
+        } else if (lines[i] == ""){
+          output += "\n";
+        } else {
+          output += "\n";
+        }
+    
+  } 
+    document.getElementById("output").innerHTML = output;
+}
+ </script>
+ 
+</body>
+</html>
